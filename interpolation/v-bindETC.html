@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>值绑定</title>
+  <script src="../lib/vue.min.js"></script>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="myApp">
+    <!-- 插值 使用v-cloak可以解决差值表达式的闪烁问题 -->
+    <p @click="changePersonName" v-once v-cloak>插值：{{person}}</p>
+    <p>{{template}}</p>
+
+    <!-- 默认v-text是没有闪烁问题的 -->
+    <!-- 2.差值表达式可以在标签里存放其他内容
+       v-text会覆盖元素中原本的内容，但是差值表达式，只会替换自己的这个占位符，不会把整个元素的内容清空 -->
+    <p v-text="person">person</p>
+    <p v-text="template"></p>
+
+    <!-- 注意，你不能使用 v-html 来复合局部模板，因为 Vue 不是基于字符串的模板引擎。反之，对于用户界面 (UI)，组件更适合作为可重用和可组合的基本单位。 -->
+    <!-- 你的站点上动态渲染的任意 HTML 可能会非常危险，因为它很容易导致 XSS 攻击。请只对可信内容使用 HTML 插值，绝不要对用户提供的内容使用插值 -->
+    <p v-html="template">template</p>
+
+    <!-- 注意v-text、v-html会将标签改为双标签-->
+    <input type="text" v-text="person">
+    <input type="text" v-html="person">
+    <input type="text" v-bind="person">
+
+    <!-- v-bind:是Vue中，提供的用于绑定属性的指令 -->
+    <!-- v-bind:属性  简写为  :属性 -->
+    <input type="text" v-bind:value="person"><br />
+    <div v-bind:data="person">person</div>
+    <button @click="changeDisplay">display</button>
+    <!-- 2.6版本后支持 -->
+    <div v-bind:[display1]="display">person</div>
+
+    <!-- v-bind中，可以写合法的js方法 -->
+    <input type="text" v-bind:value='this.value =3+3' value="aaaa"><br />
+
+    <!-- 遇到Boolean类型时  undefined、null、false时 disabled不会被渲染到标签中-->
+
+    <button v-bind:disabled="isButtonDisabled">Button</button>
+
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#myApp",
+      data: {
+        person: "我是一个可爱的人",
+        template: "<span style=color:red;>template</span>",
+        isNewVal: false,
+        display1: "display",
+        display: "none",
+        isButtonDisabled: {}
+      },
+      methods: {
+        changePersonName() {
+          this.isNewVal = !this.isNewVal;
+          if (this.isNewVal) {
+            this.person = "我是一个可爱的人"
+          } else {
+            this.person = "O(∩_∩)O，是吗？"
+          }
+        },
+        changeDisplay() {
+          console.log(this.display);
+          this.display = this.display === "block" ? "none" : "block";
+        }
+      },
+
+    })
+  </script>
+</body>
+
+</html>

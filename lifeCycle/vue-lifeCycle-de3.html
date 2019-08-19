@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue-lifeCycle</title>
+  <script src="../lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="myApp">
+    <p v-text="num"></p>
+  </div>
+  <script>
+    var a = 12;
+    let vm = new Vue({
+      el: "#myApp",
+      data: {
+        num: 20
+      },
+      //不要在选项属性或回调上使用箭头函数
+      // 因为箭头函数并没有this,因为箭头函数并没有 this，this 会作为变量一直向上级词法作用域查找，直至找到为止，经常导致 Uncaught TypeError: Cannot read property of undefined 或 Uncaught TypeError: this.myMethod is not a function 之类的错误。
+      created: () => {
+        // `this` 指向 vm 实例
+        console.log('a is: ' + this.a)
+      },
+
+    })
+  </script>
+</body>
+
+</html>

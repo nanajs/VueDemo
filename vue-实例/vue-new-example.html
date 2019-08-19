@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue-new-example</title>
+  <!-- 1.导入vue的包 -->
+  <script src="../lib/vue.min.js"></script>
+</head>
+
+<body>
+  <!-- 给定一个id vue实例所控制的这个元素区域，就是我们的V  -->
+  <!-- 注意： 2.0版本以后id不能取body或者html标签 -->
+  <div id="myApp">
+    <p>{{a}}</p>
+  </div>
+
+  <script>
+    var data = {
+      a: 1
+    };
+
+    // 创建Vue实例 实例会控制这个元素的所有内容
+    var vm = new Vue({
+      el: "#myApp", //表示，当前我们new的这个vue实例，要控制页面上的哪个区域
+      //这里的data就是MVVM中的M,专门保存每个页面的数据的
+      data: data //data属性中，存放的是el中要用到的数据
+    });
+    console.log(data.a == vm.a); // true
+    // 控制台中改变data.a或者vm.a 其他一个都随之改变
+    vm.a = 2
+    data.a // => 2
+
+    // 向外还暴露了有用的实例属性和方法，他们都有前缀$,以便与用户定义的数据区分
+    console.log(vm.$data === data); // true
+    console.log(vm.$el === document.getElementById('myApp')) // => true
+  </script>
+
+  <div id="myApp2">
+    <p>{{a}}</p>
+  </div>
+  <script>
+    new Vue({
+      el: "#myApp2",
+      data: {
+        a: 12
+      }
+    })
+  </script>
+
+</body>
+
+</html>

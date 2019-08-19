@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>v-for</title>
+  <script src="../lib/vue.min.js"></script>
+</head>
+<div id="vFor">
+  数字 item值从1开始
+  <p v-for="(item,i) in num">索引值：{{i}}---每一项：{{item}}</p>
+  字符串
+  <p v-for="(item,i) in str">索引值：{{i}}---每一项：{{item}}</p>
+  普通数组
+  <p v-for="(item,i) in list">索引值：{{i}}---每一项：{{item}}</p>
+  对象数组
+  <p v-for="(item,i) in objList">名称：{{item.name}} 身高：{{item.height}}--- 索引值：{{i}}</p>
+  遍历对象
+  <!-- 注意：在遍历对象身上的键值对的时候， 除了 有  val  key  ,在第三个位置还有 一个 索引  -->
+  <p v-for="(val, key, i) in user">值是： {{ val }} --- 键是： {{key}} -- 索引： {{i}}</p>
+
+</div>
+<script>
+  new Vue({
+    el: "#vFor",
+    data: {
+      num: 4,
+      str: "string",
+      list: ['one', 'two', 'three'],
+      objList: [{
+        'name': 'zs',
+        'height': '190cm',
+        'hobit': 'paly games'
+      }, {
+        'name': 'zs1',
+        'height': '191cm',
+        'hobit': 'paly games'
+      }, {
+        'name': 'zs2',
+        'height': '192cm',
+        'hobit': 'paly games'
+      }],
+      user: {
+        name: 12,
+        age: "age1"
+      }
+    }
+  })
+</script>
+
+<body>
+
+</body>
+
+</html>

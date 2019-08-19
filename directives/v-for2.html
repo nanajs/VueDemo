@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>v-for</title>
+  <script src="../lib/vue.min.js"></script>
+</head>
+<div id="vFor">
+  <form v-on:submit.prevent="addObj">
+    name: <input type="text" v-model="name"><br />
+    height: <input type="text" v-model="height"><br />
+    hobit: <input type="text" v-model="hobit"><br />
+    <button>Add</button>
+  </form>
+  <button @click="changeVal">changeVal</button>
+
+  <!-- 注意： v-for 循环的时候，key 属性只能使用 number获取string -->
+  <!-- 注意： key 在使用的时候，必须使用 v-bind 属性绑定的形式，指定 key 的值 -->
+  <!-- 在组件中，使用v-for循环的时候，或者在一些特殊情况中，如果 v-for 有问题，必须 在使用 v-for 的同时，指定 唯一的 字符串/数字 类型 :key 值 -->
+  <p v-for="(val,i) in objList" :key="i">
+    {{i}} --{{val.name}} --- {{val.height}}
+  </p>
+
+</div>
+<script>
+  var vm = new Vue({
+    el: "#vFor",
+    data: {
+      name: 'za',
+      height: 180,
+      hobit: 'za',
+      objList: [{
+        'name': 'zs',
+        'height': '190cm',
+        'hobit': 'paly games'
+      }]
+    },
+    methods: {
+      addObj() {
+        this.objList.unshift({
+          'name': this.name,
+          'height': this.height,
+          'hobit': this.hobit
+        });
+      },
+      changeVal() {
+        this.objList[0].name = "changeVal";
+      }
+    },
+  })
+
+  function addObj() {
+    vm.$set(vm.objList[0], "age", 12)
+  }
+</script>
+
+<body>
+
+</body>
+
+</html>

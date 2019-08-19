@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>V-if</title>
+  <script src="../lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="myApp">
+    <button @click="changeShow()">change SHOW</button>
+    <!-- v-if插入移除元素 -->
+    <div style="width: 200px;height: 200px;border: 1px solid blueviolet" v-if="isShow">
+      SHOW is true
+    </div>
+    <button @click="changeShow2()">change isShow2</button>
+    <!-- v-show 改变元素的display属性 none -->
+    <span style="width: 200px;height: 200px;border: 1px solid blueviolet" v-show="isShow2">
+      SHOW is true
+    </span>
+
+    <!-- compaire
+      v-if 有较高的切换性能消耗
+      v-show 有较高的初始渲染消耗-->
+
+    建议：
+    如果元素涉及到频繁的切换，最好不要使用 v-if, 而是推荐使用 v-show
+    如果元素可能永远也不会被显示出来被用户看到，则推荐使用 v-if
+  </div>
+  <script>
+    var vn = new Vue({
+      el: "#myApp",
+      data: {
+        isShow: true,
+        isShow2: true
+      },
+      methods: {
+        changeShow() {
+          this.isShow = !this.isShow;
+        },
+        changeShow2() {
+          this.isShow2 = !this.isShow2;
+
+        }
+      },
+    })
+  </script>
+
+</body>
+
+</html>
