@@ -27,6 +27,8 @@ var vm = new Vue({
 注意：在Nextwork中为slow 3G时，页面会出现闪烁问题；`{{msg}}`
 解决办法：元素属性中使用v-cloak,然后在CSS样式中加入[v-cloak]{display:none};
 
+- `v-` 前缀作为一种视觉提示，用来识别模板中 Vue 特定的特性。
+
 ##### v-once
 
 执行一次性地插值，当数据改变时，插值处的内容不会更新

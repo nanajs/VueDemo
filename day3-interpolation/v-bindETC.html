@@ -8,7 +8,7 @@
   <title>值绑定</title>
   <script src="../lib/vue.min.js"></script>
   <style>
-    [v-cloak] {
+    [v-clock] {
       display: none;
     }
   </style>
@@ -16,8 +16,8 @@
 
 <body>
   <div id="myApp">
-    <!-- 插值 使用v-cloak可以解决差值表达式的闪烁问题 -->
-    <p @click="changePersonName" v-once v-cloak>插值：{{person}}</p>
+    <!-- 插值 使用v-clock可以解决差值表达式的闪烁问题 -->
+    <p @click="changePersonName" v-once v-clock>插值：{{person}}</p>
     <p>{{template}}</p>
 
     <!-- 默认v-text是没有闪烁问题的 -->
@@ -41,7 +41,8 @@
     <div v-bind:data="person">person</div>
     <button @click="changeDisplay">display</button>
     <!-- 2.6版本后支持 -->
-    <div v-bind:[display1]="display">person</div>
+    <!-- <div v-bind:[display1]="display">person</div> -->
+    <!-- <a v-bind:[display1]="display">person</a> -->
 
     <!-- v-bind中，可以写合法的js方法 -->
     <input type="text" v-bind:value='this.value =3+3' value="aaaa"><br />
@@ -58,7 +59,7 @@
         person: "我是一个可爱的人",
         template: "<span style=color:red;>template</span>",
         isNewVal: false,
-        display1: "display",
+        display1: "href",
         display: "none",
         isButtonDisabled: {}
       },

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>computed</title>
+  <script src="../lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="myApp">
+    <p>message:{{message}}</p>
+    <p>{{message.split('').reverse().join("-")}}</p>
+    <p>originVal: {{originVal}}</p>
+    <p>computed reverseMessage: {{ reverseMessage }}</p>
+    <p>methods reverseMessage:'{{ reverseMessageM() }}'</p>
+  </div>
+  <script>
+    new Vue({
+      el: "#myApp",
+      data: {
+        message: 'Hello',
+        originVal: ""
+      },
+      computed: {
+        // 每次计算后有缓存，下次直接调用，方法复杂时可直接调用
+        // 对应的有get和set方法
+        reverseMessage: {
+          get: function () {
+            // 对应属性在data中没有定义
+            return this.message.split('').reverse().join('');
+          },
+          // setter
+          set: function (newValue) {
+            this.originVal = newValue.split('').reverse().join('');
+          }
+        }
+      },
+      methods: {
+        // 每次调用都需要重新执行，逻辑复杂时消耗性能
+        reverseMessageM: function () {
+          return this.message.split('').reverse().join('');
+        }
+      },
+    })
+  </script>
+
+</body>
+
+</html>
