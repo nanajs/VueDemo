@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue-expression表达式</title>
+  <script src="../lib/vue.min.js"></script>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="myApp">
+    <p>{{ number + 1 }}</p>
+    <p>{{ isNewVal ? "YES" : "NO" }}</p>
+    <p>{{ message.split('').reverse().join('') }}</p>
+    <div v-text="'list-' + number"></div>
+    {{new Date()}}
+
+    <!-- 限制: 每个绑定都只能包含单个表达式 -->
+    <!-- <p>{{var a = 12}}</p> -->
+    <!-- {{ if (isNewVal) { return number } }} -->
+
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#myApp",
+      data: {
+        number: 12,
+        isNewVal: false,
+        message: "asdfg",
+        isButtonDisabled: {}
+      },
+      methods: {
+        changePersonName() {
+          this.isNewVal = !this.isNewVal;
+          if (this.isNewVal) {
+            this.person = "我是一个可爱的人"
+          } else {
+            this.person = "O(∩_∩)O，是吗？"
+          }
+        }
+      },
+
+    })
+  </script>
+</body>
+
+</html>

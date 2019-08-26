@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>computed</title>
+  <script src="../lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="myApp">
+    <input type="text" v-model="firstName">
+    <input type="text" v-model="lastName">
+    fullName: <input type="text" v-model="fullName">
+    <p>fullName:{{fullName}}</p>
+    <p>fullNames : {{fullNames()}}</p>
+    <p>fullNameWatch {{ fullNameWatch }}</p>
+  </div>
+  <script>
+    new Vue({
+      el: "#myApp",
+      data: {
+        firstName: 'First',
+        lastName: 'Last',
+        fullNameWatch: 'First Last',
+      },
+      computed: {
+        fullName: {
+          get: function () {
+            return this.firstName + " " + this.lastName;
+          },
+          set: function (val) {
+            var vals = val.split(" ");
+            this.firstName = vals[0];
+            this.lastName = vals[vals.length - 1];
+          }
+        }
+      },
+      watch: {
+        /* ajax时，实时监控，设置中间状态， computed无法做到 */
+        firstName: function (Val) {
+          this.fullNameWatch = Val + " " + this.lastName;
+        },
+        lastName: function (Val) {
+          this.fullNameWatch = this.firstName + " " + Val;
+        }
+      },
+      methods: {
+        fullNames: function () {
+          return this.firstName + " " + this.lastName;
+        }
+      },
+    })
+  </script>
+
+</body>
+
+</html>

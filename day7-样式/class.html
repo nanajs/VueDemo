@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Class</title>
+  <script src="../lib/vue.min.js"></script>
+  <style>
+    .border {
+      box-shadow: 0 1px 0 10px #DDD;
+    }
+
+    .active {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="myApp">
+    <!-- 可以有多个属性并存改变样式
+    可以和原样式共存 -->
+    <!-- 对象  -->
+    <div class="border" v-bind:class="{active: isActive, shadow: hasShadow}">Class 样式</div>
+    <!-- 返回一个计算属性 -->
+    <div class="border" v-bind:class="computedClass">computed Class 样式</div>
+    <!-- 数组 -->
+    <div class="border" v-bind:class=[activeClass,shadowClass]>array Class 样式</div>
+    <!-- 三元运算符 -->
+    <div class="border" v-bind:class=[isActive?'active':'',shadowClass]>array Class 样式</div>
+    <!-- 在数组中使用对象来代替三元表达式，提高代码的可读性 -->
+    <div class="border" v-bind:class=[{active: isActive},shadowClass]>array Class 样式</div>
+
+    <button @click="changeClass()">changeClass</button>
+  </div>
+  <script>
+    new Vue({
+      el: "#myApp",
+      data: {
+        isActive: false,
+        hasShadow: true,
+        activeClass: 'active',
+        shadowClass: 'shadow'
+      },
+      methods: {
+        changeClass: function () {
+          this.isActive = !this.isActive;
+        }
+      },
+      computed: {
+        computedClass: function () {
+          return {
+            active: this.isActive,
+            shadow: this.hasShadow
+          }
+        }
+      },
+    })
+  </script>
+
+</body>
+
+</html>

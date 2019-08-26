@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue-lifeCycle</title>
+  <script src="../lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="myApp">
+    <p id="text" v-text="num"></p>
+    <button id="btn" @click="change()">ChangeNum</button>
+  </div>
+  <script>
+    let vm = new Vue({
+      el: "#myApp",
+      data: {
+        num: 20
+      },
+      methods: {
+        change() {
+          this.num = "change";
+        }
+      },
+      // 创建实例的周期函数
+      beforeCreate() {
+        //表示实例完全被创建出来之前，会执行它
+        console.group('-----------beforeCreate------------');
+        console.group(document.getElementById('btn'));
+        console.group(document.getElementById('text').innerText); // ""
+        // 注意： 在 beforeCreate 生命周期函数执行的时候，data 和 methods 中的 数据都还没有被初始化
+        console.group('num' + this.num); // undefined
+      },
+      created: function () {
+        console.group('-----------created------------');
+        console.group(document.getElementById('btn'));
+        console.group(document.getElementById('text').innerText); // ""
+        //  在 created 中，data 和 methods 都已经被初始化好了！
+        // 如果要调用 methods 中的方法，或者操作 data 中的数据，最早，只能在 created 中操作
+        console.group('num' + this.num); // 20
+      },
+      beforeMount() {
+        // 模板已经在内存中编辑完成了，但是尚未把 模板渲染到 页面中
+        console.group('-----------beforeMount------------');
+        console.group(document.getElementById('btn'));
+        console.group(document.getElementById('text').innerText); // ""
+        console.group('num' + this.num); // 20
+
+      },
+      mounted() {
+        // 内存中的模板，已经真实的挂载到了页面中，用户已经可以看到渲染好的页面了
+        // 实例创建期间的最后一个生命周期函数，当执行完 mounted 就表示，实例已经被完全创建好了，此时，如果没有其它操作的话，这个实例，就静静的 躺在我们的内存中，一动不动
+        console.group('-----------mounted------------');
+        console.group(document.getElementById('btn'));
+        console.group(document.getElementById('text').innerText); // 20
+        console.group('num' + this.num); // 20
+
+      },
+      //  运行中的两个事件
+      beforeUpdate() {
+        // 我们的界面还没有被更新【数据被更新了吗？  数据肯定被更新了】
+        console.group('-----------beforeUpdate------------');
+        console.group(document.getElementById('btn'));
+        // 当执行 beforeUpdate 的时候，页面中的显示的数据，还是旧的，此时 data 数据是最新的，页面尚未和 最新的数据保持同步
+        console.group(document.getElementById('text').innerText); // 20
+        console.group('num' + this.num); // change
+
+      },
+      updated() {
+        console.group('-----------updated------------');
+        console.group(document.getElementById('btn'));
+        // updated 事件执行的时候，页面和 data 数据已经保持同步了，都是最新的
+        console.group(document.getElementById('text').innerText); // change
+        console.group('num' + this.num); // change
+
+      },
+      beforeDestroy() {
+        console.group('-----------beforeDestroy------------');
+        console.group(document.getElementById('btn'));
+        console.group(document.getElementById('text').innerText);
+        console.group('num' + this.num);
+
+      },
+      destroyed() {
+        console.group('-----------destroyed------------');
+        console.group(document.getElementById('btn'));
+        console.group(document.getElementById('text').innerText);
+        console.group('num' + this.num);
+
+      },
+    })
+  </script>
+</body>
+
+</html>
