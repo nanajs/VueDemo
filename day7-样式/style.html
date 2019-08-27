@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Class</title>
+  <script src="../lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="myApp">
+    <!-- 支持驼峰式和短横线(引号括起来)命名 -->
+    <div v-bind:style="{color: styleColor,'font-size':fontSize }">Obj 内联样式</div>
+
+    <div v-bind:style="styleObj">styleObj 内联样式</div>
+    <!-- 数组 -->
+    <div v-bind:style="[styleObj,styleObj1]">array 内联样式</div>
+    <!-- 多重值 -->
+    <div :style="{display: ['-webkit-box', '-ms-flexbox', 'flex']}">array 内联样式</div>
+    <button @click="changeClass()">changeClass</button>
+  </div>
+  <script>
+    new Vue({
+      el: "#myApp",
+      data: {
+        styleColor: "red",
+        fontSize: '30px',
+        styleObj: {
+          color: 'red',
+          'font-size': '40px'
+        },
+        styleObj1: {
+          border: '1px dashed red'
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

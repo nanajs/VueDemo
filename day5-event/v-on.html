@@ -1,12 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>v-on</title>
+  <script src="../lib/vue.min.js"></script>
 </head>
+
 <body>
+  <div id="v-on">
+    <span>{{message}}</span>
+    <button v-on:click="changeMessage()">changeMessage</button>
+    <button v-on:click="changeMessage1">changeMessage1</button>
+    <button v-on:click="changeMessage2($event)">changeMessage2</button>
+    <p>事件修饰符</p>
+  </div>
+  <script>
+    let vm = new Vue({
+      el: '#v-on',
+      data: {
+        message: "you don't change me"
+      },
+      methods: {
+        /* 1. methods中创建
+        changeMessage: function () {
+          // `this` 在方法里指向当前 Vue 实例
+          this.message = "I change you"
+        } */
+        changeMessage1: function (event) {
+          console.log(event)
+        },
+        changeMessage2: function (e) {
+          console.log(e);
+        }
+      },
+    })
+    // 2. js直接调用方法
+    vm.changeMessage = function () {
+      vm.message = "I change you"
+    }
+  </script>
 
 </body>
+
 </html>

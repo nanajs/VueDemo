@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>$set.set</title>
+  <script src="./lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="set">
+    <pre>
+      数组更新检测
+      1. 编译方法会实时触发视图更新
+    </pre>
+    <ul>
+      <li v-for="item in mutationMethod" v-text="item.title" style="color:red;"></li>
+    </ul>
+    <ul>
+      <li>Demo</li>
+      <li><span v-text="mutationDemo"></span></li>
+    </ul>
+    <button @click="pushDemo()">push</button>
+    <pre>
+      替换数组
+      filter()、concat() 和 slice()
+    </pre>
+    <span v-for="item in mutationDemo" v-text="item + ','"></span>
+    <button @click="concatDemo()">concatDemo</button>
+    <button @click="changeDemoLength()">change Demo Length</button>
+
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#set",
+      data: {
+        mutationMethod: [{
+          title: 'push()'
+        }, {
+          title: 'pop()'
+        }, {
+          title: 'shift()'
+        }, {
+          title: 'unshift()'
+        }, {
+          title: 'splice()'
+        }, {
+          title: 'sort()'
+        }, {
+          title: 'reverse()'
+        }],
+        mutationDemo: [],
+      },
+      methods: {
+        pushDemo: function () {
+          this.mutationDemo.push(this.mutationDemo.length);
+        },
+        concatDemo: function () {
+          this.mutationDemo = this.mutationDemo.concat('demo');
+        },
+        changeDemoLength: function () {
+          let len = this.mutationDemo.length;
+          // 页面不响应
+          // this.mutationDemo[len-1] = len;
+          // vm.$set为Vue.set的别名
+          // Vue.set(this.mutationDemo, len, len);
+          vm.$set(this.mutationDemo, len, len);
+          // 也可使用splice方法
+
+          /* 数组Vue.set(vm.items, indexOfItem, newValue)  splice*/
+          /* 对象Vue.set(object, propertyName, value)  Object.assign()*/
+
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

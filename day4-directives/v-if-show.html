@@ -16,8 +16,32 @@
     <div style="width: 200px;height: 200px;border: 1px solid blueviolet" v-if="isShow">
       SHOW is true
     </div>
+    <!-- 使用template元素包裹，页面渲染无template标签 -->
+    <!-- v-else必须跟在v-if或者v-else-if后面 -->
+    <template v-else>
+      <div>v-else</div>
+      <div>template</div>
+    </template>
+
+    v-if v-else-if v-else
+    <!-- 添加key属性，原来元素不被复用，每次切换重新渲染input -->
+    <template v-if="loginType === 'phone'">
+      <label>phone</label>
+      <input placeholder="Enter your phone" key='phone'>
+    </template>
+    <template v-else-if="loginType === 'email'">
+      <label>email</label>
+      <input placeholder='Enter your email' key='email'>
+    </template>
+    <template v-else>
+      <label>name</label>
+      <input placeholder='Enter your name' key='name'>
+    </template>
+    <button @click="changeLoginType('phone')">phone</button>
+    <button @click="changeLoginType('email')">email</button>
+
     <button @click="changeShow2()">change isShow2</button>
-    <!-- v-show 改变元素的display属性 none -->
+    <!-- v-show 改变元素的display属性 none 不支持template元素-->
     <span style="width: 200px;height: 200px;border: 1px solid blueviolet" v-show="isShow2">
       SHOW is true
     </span>
@@ -35,7 +59,8 @@
       el: "#myApp",
       data: {
         isShow: true,
-        isShow2: true
+        isShow2: true,
+        loginType: 'name'
       },
       methods: {
         changeShow() {
@@ -43,7 +68,9 @@
         },
         changeShow2() {
           this.isShow2 = !this.isShow2;
-
+        },
+        changeLoginType(type) {
+          this.loginType = type || 'name';
         }
       },
     })
