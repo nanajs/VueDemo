@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Event Modifier事件修饰符</title>
+  <script src="../lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="eventModifier">
+    <!-- .stop阻止冒泡 -->
+    <div @click="stopThis">stopThis <span @click.stop="stopChildren">.stop阻止事件传播</span> </div>
+
+    <!-- .prevent 阻止默认行为 提交页面不重载页面  -->
+    <a href="http://www.baidu.com" @click.prevent="addV">有问题，先去百度</a>
+    <form @submit.prevent="addV">
+      <input type="text" v-model="name">
+      <button>submit</button>
+    </form>
+
+    <!-- 修饰符可以串联，顺序有影响 -->
+    <!-- 只有修饰符 -->
+    <form v-on:submit.prevent></form>
+
+    <!-- 添加事件监听器时使用事件捕获模式 -->
+    <!-- 即元素自身触发的事件先在此处理，然后才交由内部元素进行处理 -->
+    <div v-on:click.capture="addV">...</div>
+    <!-- 使用  .capture 实现捕获触发事件的机制 -->
+    <div class="inner" @click.capture="outerHandler">outerHandler
+      <input type="button" value="btnHandler" @click="btnHandler">
+    </div>
+
+    <!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
+    <!-- 即事件不是从内部元素触发的 -->
+    <div v-on:click.self="addV">...</div>
+    <!-- 演示： .stop 和 .self 的区别 -->
+    <div class="outer" @click="outerHandler">
+      <div class="inner" @click="innerHandler">
+        <input type="button" value="戳他" @click.stop="btnHandler">
+      </div>
+    </div>
+     <!-- .self 只会阻止自己身上冒泡行为的触发，并不会真正阻止 冒泡的行为 -->
+    <div class="outer" @click="outerHandler">
+      <div class="inner" @click.self="innerHandler">
+        <input type="button" value="戳他" @click="btnHandler">
+      </div>
+    </div>
+    2.1.4 新增
+    <!-- 点击事件将只会触发一次 -->
+    <a v-on:click.once="addV">click.once</a>
+    2.3.0 新增
+    <!-- 滚动事件的默认行为 (即滚动行为) 将会立即触发 -->
+    <!-- 而不会等待 `onScroll` 完成  -->
+    <!-- 这其中包含 `event.preventDefault()` 的情况 -->
+    <div v-on:scroll.passive="enter">...</div>
+    不要把 .passive 和 .prevent 一起使用，因为 .prevent 将会被忽略，同时浏览器可能会向你展示一个警告。请记住，.passive 会告诉浏览器你不想阻止事件的默认行为。
+    <hr>
+
+    按键修饰符
+    <input v-on:keyup.enter="enter($event)" value="enter">
+    <hr>
+    <input v-on:keyup.page-down="enter($event)" value="page-down">
+    <hr>
+    使用keyCode作为按键修饰符
+    <input v-on:keyup.83="enter($event)" value="s 的keyCode为83">
+    常用按键码别名：
+    .enter .tab .delete .esc .space .up .down .left .right
+    <br>
+    2.1.0新增 .ctrl .alt .shift .meta(window上为window键)
+    <hr>
+    全局对象自定义按键码别名
+    Vue.config.keyCodes.s1 = 83
+    <input type="text" v-on:keyup.s1="enter($event)">
+    <!-- Alt + C -->
+    <input @keyup.alt.67="clear">
+    <br>
+    .exact修饰符允许你控制由精确的系统修饰符组合触发的事件
+    <!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+    <button @click.ctrl="onClick">A</button>
+
+    <!-- 有且只有 Ctrl 被按下的时候才触发 -->
+    <button @click.ctrl.exact="onCtrlClick">A</button>
+
+    鼠标修饰符
+    .left .right .middle
+  </div>
+  <script>
+    new Vue({
+      el: '#eventModifier',
+      data: {
+        name: 'name submit'
+      },
+      methods: {
+        stopThis: function () {
+          alert('stopThis');
+        },
+        stopChildren: function () {
+          console.log('stopChildren');
+        },
+        addV: function () {
+          console.log('submit');
+        },
+        enter: function (e) {
+          console.log(e)
+        },
+        outerHandler: function(){
+          console.log('outerHandler')
+        },
+        innerHandler: function(){
+          console.log('innerHandler')
+        },
+        btnHandler: function(){
+          console.log('btnHandler')
+        }
+      },
+    })
+    Vue.config.keyCodes.s1 = 83
+  </script>
+
+</body>
+
+</html>
