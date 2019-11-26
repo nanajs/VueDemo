@@ -27,10 +27,11 @@
 
     <!-- 添加事件监听器时使用事件捕获模式 -->
     <!-- 即元素自身触发的事件先在此处理，然后才交由内部元素进行处理 -->
-    <div v-on:click.capture="addV">...</div>
+    <div v-on:click.capture="addV">capture...</div>
     <!-- 使用  .capture 实现捕获触发事件的机制 -->
     <div class="inner" @click.capture="outerHandler">outerHandler
       <input type="button" value="btnHandler" @click="btnHandler">
+      先外部outerHandler，后内部btnHandler
     </div>
 
     <!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
@@ -42,7 +43,7 @@
         <input type="button" value="戳他" @click.stop="btnHandler">
       </div>
     </div>
-     <!-- .self 只会阻止自己身上冒泡行为的触发，并不会真正阻止 冒泡的行为 -->
+    <!-- .self 只会阻止自己身上冒泡行为的触发，并不会真正阻止 冒泡的行为 -->
     <div class="outer" @click="outerHandler">
       <div class="inner" @click.self="innerHandler">
         <input type="button" value="戳他" @click="btnHandler">
@@ -60,14 +61,17 @@
     <hr>
 
     按键修饰符
-    <input v-on:keyup.enter="enter($event)" value="enter">
     <hr>
+    只有enter键时触发
+    <input v-on:keyup.enter="enter($event)" value="enter">
+    <hr>将任意键名转化为 kebab-case 来作为修饰符
     <input v-on:keyup.page-down="enter($event)" value="page-down">
+    <input v-on:keyup.shift="enter($event)" value="page-down">
     <hr>
     使用keyCode作为按键修饰符
     <input v-on:keyup.83="enter($event)" value="s 的keyCode为83">
     常用按键码别名：
-    .enter .tab .delete .esc .space .up .down .left .right
+    .enter .tab .delete(删除和退格键) .esc .space .up .down .left .right
     <br>
     2.1.0新增 .ctrl .alt .shift .meta(window上为window键)
     <hr>
@@ -79,6 +83,7 @@
     <br>
     .exact修饰符允许你控制由精确的系统修饰符组合触发的事件
     <!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+    <!-- Ctrl + Click -->
     <button @click.ctrl="onClick">A</button>
 
     <!-- 有且只有 Ctrl 被按下的时候才触发 -->
@@ -106,13 +111,13 @@
         enter: function (e) {
           console.log(e)
         },
-        outerHandler: function(){
+        outerHandler: function () {
           console.log('outerHandler')
         },
-        innerHandler: function(){
+        innerHandler: function () {
           console.log('innerHandler')
         },
-        btnHandler: function(){
+        btnHandler: function () {
           console.log('btnHandler')
         }
       },

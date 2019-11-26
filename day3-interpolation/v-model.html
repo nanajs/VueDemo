@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>v-model</title>
+  <script src="../lib/vue.min.js"></script>
+</head>
+
+<body>
+  v-model绑定的值在使用前必须定义
+  v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
+
+  text 和 textarea 元素使用 value 属性和 input 事件；
+  checkbox 和 radio 使用 checked 属性和 change 事件；
+  select 字段将 value 作为 prop 并将 change 作为事件。
+  <div id="model-demo1">
+    <input type="text" v-model="text" @input="inputText()"><br />
+    <div>文本值：{{text}}</div>
+    <textarea v-model="textArea" @input="changeTextArea" cols="30" rows="10"></textarea>
+    <code v-text="'在文本区域插值 (<textarea>{{text}}</textarea>) 并不会生效，应用 v-model 来代替。'"></code><br />
+    <textarea cols="30" rows="10">{{textArea}}</textarea>
+    <div style="white-space: pre-wrap;">textArea文本域值： {{textArea}}</div>
+  </div>
+  <script>
+    new Vue({
+      el: '#model-demo1',
+      data: {
+        text: '',
+        textArea: ''
+      },
+      methods: {
+        inputText: function () {
+          console.log(this.text);
+        },
+        changeTextArea: function () {
+          console.log(this.textArea);
+        }
+      },
+    })
+  </script>
+
+</body>
+
+</html>
